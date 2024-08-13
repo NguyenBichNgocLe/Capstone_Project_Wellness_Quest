@@ -1,0 +1,2281 @@
+{
+	"info": {
+		"_postman_id": "df530ca4-61b9-4eeb-a63d-a4c8b9602230",
+		"name": "Wellness Quest API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33541762"
+	},
+	"item": [
+		{
+			"name": "User Routes",
+			"item": [
+				{
+					"name": "Registration",
+					"item": [
+						{
+							"name": "Successful User Registration",
+							"item": [
+								{
+									"name": "TEST_register_account",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 200 (OK) for valid inputs\r",
+													"pm.test(\"Successful Registration - Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Successful Registration - Registration successful message is returned\", function () {\r",
+													"    const responseBody = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(responseBody).to.have.property(\"response\");\r",
+													"\r",
+													"    const expectedMessage = 'User arilalale created';\r",
+													"    pm.expect(responseBody.response).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Unsuccessful User Registration",
+							"item": [
+								{
+									"name": "TEST_register_account_with_invalid_email",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 400 (Bad Request Error) for invalid emails\r",
+													"pm.test(\"Unsuccessful Registration - Invalid Email - Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - Invalid Email - Alert for invalid email\", function () {\r",
+													"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'Not a valid email address';\r",
+													"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"fakeAddr\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_register_account_with_invalid_password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 400 (Bad Request Error) for invalid password\r",
+													"pm.test(\"Unsuccessful Registration - Invalid Password - Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - Invalid Password - Alert for invalid password\", function () {\r",
+													"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'Password needs at 8 characters with at least 1 uppercase, 1 lowercase, 1 digit, and 1 special character';\r",
+													"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"fakeEmail@fake.com\",\r\n    \"password\" : \"password\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_register_account_without_username",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 400 (Bad Request Error) for not providing username\r",
+													"pm.test(\"Unsuccessful Registration - Without Username - Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - Without Username - Alert for not providing username\", function () {\r",
+													"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'Username not provided';\r",
+													"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"\",\r\n    \"email\" : \"fakeEmail@fake.com\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_register_account_without_email",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 400 (Bad Request Error) for not providing an email\r",
+													"pm.test(\"Unsuccessful Registration - Without Email - Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - Without Email - Alert for not providing an email\", function () {\r",
+													"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'Email not provided';\r",
+													"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_register_account_without_password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 400 (Bad Request Error) for not providing a password\r",
+													"pm.test(\"Unsuccessful Registration - Without Password - Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - Without Password - Alert for not providing a password\", function () {\r",
+													"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'Password not provided';\r",
+													"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"fakeEmail@fake.com\",\r\n    \"password\" : \"\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_register_account_without_first_name",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 400 (Bad Request Error) for not providing a first name\r",
+													"pm.test(\"Unsuccessful Registration - Without First Name - Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - Without First Name - Alert for not providing a first name\", function () {\r",
+													"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'First name not provided';\r",
+													"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"fakeEmail@fake.com\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_register_account_without_last_name",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 400 (Bad Request Error) for not providing a last name\r",
+													"pm.test(\"Unsuccessful Registration - Without Last Name - Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - Without Last Name - Alert for not providing a last name\", function () {\r",
+													"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'Last name not provided';\r",
+													"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"fakeEmail@fake.com\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Duplicate User",
+							"item": [
+								{
+									"name": "TEST_duplicate_user_same_email",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 409 (Conflict) for registering using the same email and username\r",
+													"pm.test(\"Unsuccessful Registration - Duplicate email address - Status code is 409\", function () {\r",
+													"    pm.response.to.have.status(409);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - Duplicate email address - Alert for an existed account\", function () {\r",
+													"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'User already exists';\r",
+													"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"testuser\",\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_duplicate_user_same_username",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if the response status is 409 (Conflict) for registering using the same email and username\r",
+													"pm.test(\"Unsuccessful Registration - Duplicate username - Status code is 409\", function () {\r",
+													"    pm.response.to.have.status(409);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - Duplicate username - Alert for an existed account\", function () {\r",
+													"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'User already exists';\r",
+													"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"fakeEmail@fake.com\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "User is logged in",
+							"item": [
+								{
+									"name": "SETUP_login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if login request is successful\r",
+													"pm.test(\"SETUP Login for Testing Unable to Register - User is logged in - Status code is 200\", function () {\r",
+													"    pm.expect(pm.response).to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Password123**\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/login"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_register_account_already_logged_in",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Unsuccessful Registration - user is logged in - Status code is 406\", function () {\r",
+													"    pm.response.to.have.status(406);\r",
+													"});\r",
+													"\r",
+													"// Check if the response body contains the expected message\r",
+													"pm.test(\"Unsuccessful Registration - user is logged in - Alert the user is already logged in\", function () {\r",
+													"    const responseBody = pm.response.json(); // Parse the response body as JSON\r",
+													"    pm.expect(responseBody).to.have.property(\"error\");\r",
+													"\r",
+													"    const expectedMessage = 'User is already logged in';\r",
+													"    pm.expect(responseBody.error).to.equal(expectedMessage);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/register"
+									},
+									"response": []
+								},
+								{
+									"name": "CLEANUP_logout",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"CLEANUP logout for Testing Unable to Register - User is logged in - Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/logout"
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "TEST_login_with_not_found_email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Login unsuccessful - Status code is 404 - Not Found Email\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Login unsuccessful - Response contains 'User not found'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'User not found';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"fakeEmail@fake.com\",\r\n    \"password\" : \"Password123**\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/users/login"
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_login_with_incorrect_password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Login unsuccessful - Status code is 401 - Incorrect password\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Login unsuccessful - Response contains 'Incorrect password'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'Incorrect password';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Pass123456**\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/users/login"
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Check if login request is successful\r",
+											"pm.test(\"Login successful - Status code is 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Login successful - Response contains 'User logged in'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User logged in\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Password123**\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/users/login"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"item": [
+						{
+							"name": "TEST_Successful_Logout",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful Logout - Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Successful Logout - Response contains 'User logged out'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User logged out\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/users/logout"
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Unsuccessful_Logout_User_Not_Logged_In",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Unsuccessful Logout - User Not Logged In - Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Unsuccessful Logout - User Not Logged In - Response contains 'User not logged in, cannot logout'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User not logged in, cannot logout\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/users/logout"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Other Related Routes",
+					"item": [
+						{
+							"name": "Get User Information",
+							"item": [
+								{
+									"name": "SETUP_Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if login request is successful\r",
+													"pm.test(\"SETUP Login for Testing Getting User Information - Status code is 200\", function () {\r",
+													"    pm.expect(pm.response).to.have.status(200);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Password123**\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/login"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_Get_User_Info",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Successfully Get User Information - Status code is 200\", function () {\r",
+													"    pm.expect(pm.response).to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Successfully Get User Information - Response contains user information\", function () {\r",
+													"    const responseBody = pm.response.json(); // Parse the response body as JSON\r",
+													"\r",
+													"    // Response contains username\r",
+													"    pm.expect(responseBody).to.have.property(\"username\");\r",
+													"    pm.expect(responseBody.username).to.equal(\"arilalale\");\r",
+													"\r",
+													"    // Response contains email\r",
+													"    pm.expect(responseBody).to.have.property(\"email\");\r",
+													"    pm.expect(responseBody.email).to.equal(\"nbl8@students.uwf.edu\");\r",
+													"\r",
+													"    // Response contains first_name\r",
+													"    pm.expect(responseBody).to.have.property(\"first_name\");\r",
+													"    pm.expect(responseBody.first_name).to.equal(\"Ari\");\r",
+													"\r",
+													"    // Response contains last_name\r",
+													"    pm.expect(responseBody).to.have.property(\"last_name\");\r",
+													"    pm.expect(responseBody.last_name).to.equal(\"Le\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Successfully Get User Information - Response contains XP information\", function () {\r",
+													"    const responseBody = pm.response.json(); // Parse the response body as JSON\r",
+													"\r",
+													"    // Response contains level\r",
+													"    pm.expect(responseBody).to.have.property(\"level\");\r",
+													"    pm.expect(responseBody.level).to.equal(1);\r",
+													"\r",
+													"    // Response contains remainingXp\r",
+													"    pm.expect(responseBody).to.have.property(\"remainingXp\");\r",
+													"    pm.expect(responseBody.remainingXp).to.equal(0);\r",
+													"\r",
+													"    // Response contains xpToNextLvl\r",
+													"    pm.expect(responseBody).to.have.property(\"xpToNextLvl\");\r",
+													"    pm.expect(responseBody.xpToNextLvl).to.equal(100);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/info"
+									},
+									"response": []
+								},
+								{
+									"name": "SETUP_Logout",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"SETUP Logout for Testing Unsuccessfully Getting User Information - Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/logout"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_Unsuccessfully_Get_User_Info",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Unsuccessfully Get User Information - Status code is 200\", function () {\r",
+													"    pm.expect(pm.response).to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Unsuccessfully Get User Information - Response contains 'logged_in: false'\", function () {\r",
+													"    const responseBody = pm.response.json(); // Parse the response body as JSON\r",
+													"\r",
+													"    // Response contains username\r",
+													"    pm.expect(responseBody).to.have.property(\"logged_in\");\r",
+													"    pm.expect(responseBody.logged_in).to.equal(false);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/info"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Delete an account",
+							"item": [
+								{
+									"name": "TEST_Unsuccessful_delete_account",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Unsuccessfully delete an account - User not logged in - Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": "http://localhost:4848/users/delete"
+									},
+									"response": []
+								},
+								{
+									"name": "SETUP_Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Check if login request is successful\r",
+													"pm.test(\"SETUP Login for Testing Deleting An Account - Status code is 200\", function () {\r",
+													"    pm.expect(pm.response).to.have.status(200);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Password123**\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:4848/users/login"
+									},
+									"response": []
+								},
+								{
+									"name": "TEST_Successful_delete_account",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Successfully delete an account - Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": "http://localhost:4848/users/delete"
+									},
+									"response": []
+								}
+							]
+						}
+					],
+					"description": "- Get all user information\n    \n- Delete the account"
+				}
+			],
+			"description": "- User Registration\n    \n- Login\n    \n- Logout\n    \n- Get user information\n    \n- Delete an account"
+		},
+		{
+			"name": "Challenge Routes",
+			"item": [
+				{
+					"name": "SETUP_Register_an_account",
+					"item": [
+						{
+							"name": "SETUP_register_acc",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"SETUP - Testing for challenge routes - Register an account\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\" : \"arilalale\",\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Password123**\",\r\n    \"first_name\" : \"Ari\",\r\n    \"last_name\" : \"Le\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/users/register"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TEST_Without_logging_in",
+					"item": [
+						{
+							"name": "TEST_Get_all_challenges_without_logging_in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get all challenges without logging in - Response code 403\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get all challenges without logging in - Response contains 'User is not logged in'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'User is not logged in';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:4848/challenges/"
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Get_all_user_challenges_without_logging_in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get all user's challenges without logging in - Response code 403\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get all user's challenges without logging in - Response contains 'User is not logged in'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'User is not logged in';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:4848/challenges/user"
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Get_a_user_challenge_using_its_challenge_id_without_logging_in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get a user's challenge using its challenge_id without logging in - Response code 403\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get a user's challenge using its challenge_id without logging in - Response contains 'User is not logged in'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'User is not logged in';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/user/:challenge_id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"user",
+										":challenge_id"
+									],
+									"variable": [
+										{
+											"key": "challenge_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Add_challenge_to_user_without_logging_in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Add a challenge to a user without logging in - Response code 403\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Add a challenge to a user without logging in - Response contains 'User is not logged in'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'User is not logged in';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/add?challenge_id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"add"
+									],
+									"query": [
+										{
+											"key": "challenge_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Get_a_challenge_info_using_its_challenge_id_without_logging_in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get a challenge information using its ID without logging in - Response code 403\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get a challenge information using its ID without logging in - Response contains 'User is not logged in'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'User is not logged in';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/:challenge_id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										":challenge_id"
+									],
+									"variable": [
+										{
+											"key": "challenge_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Get_all_users_finished_challenges_without_logging_in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get all user's finished challenges without logging in - Response code 403\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get all user's finished challenges without logging in - Response contains 'User is not logged in'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'User is not logged in';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:4848/challenges/finished"
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_delete_challenge_from_user_without_logging_in",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Delete a challenge from a user profile without logging in - Response code 403\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Delete a challenge from a user profile without logging in - Response contains 'User is not logged in'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'User is not logged in';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/user/:challenge_id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"user",
+										":challenge_id"
+									],
+									"variable": [
+										{
+											"key": "challenge_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "SETUP_Login",
+					"item": [
+						{
+							"name": "SETUP_login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Check if login request is successful\r",
+											"pm.test(\"SETUP - Testing for challenge routes - Login\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"nbl8@students.uwf.edu\",\r\n    \"password\" : \"Password123**\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/users/login"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TEST_Get_all_challenges",
+					"item": [
+						{
+							"name": "TEST_Get_all_challenges",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get all challenges - Response code 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get all challenges - Response contains the list of challenges\", function () {\r",
+											"    const challenges = pm.response.json();\r",
+											"\r",
+											"    // Check if challenges array exists\r",
+											"    pm.expect(challenges).to.be.an('array');\r",
+											"    pm.expect(challenges).to.not.be.empty;\r",
+											"\r",
+											"    // Check properties of each challenge object\r",
+											"    challenges.forEach(challenge => {\r",
+											"        pm.expect(challenge).to.have.property('challenge_id');\r",
+											"        pm.expect(challenge).to.have.property('challenge_name');\r",
+											"        pm.expect(challenge).to.have.property('challenge_desc');\r",
+											"        pm.expect(challenge).to.have.property('challenge_type');\r",
+											"        pm.expect(challenge).to.have.property('challenge_goal');\r",
+											"        pm.expect(challenge).to.have.property('challenge_xp');\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:4848/challenges/"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TEST_Add_challenge_to_user",
+					"item": [
+						{
+							"name": "TEST_Add_challenge_to_user_without_challenge_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Add a challenge to a user without a challenge_id - Response code 400\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Add a challenge to a user without a challenge_id - Response contains 'Missing challenge_id'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'Missing challenge_id';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": "http://localhost:4848/challenges/add"
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Add_challenge_to_user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Add a challenge to the logged-in user profile - Response code 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Add a challenge to the logged-in user profile - Response contains the added challenge information\", function () {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    pm.expect(responseBody).to.be.an('array').that.is.not.empty;\r",
+											"\r",
+											"    const addedChallenge = responseBody[0];\r",
+											"    pm.expect(addedChallenge).to.have.property('challenge_status');\r",
+											"    pm.expect(addedChallenge).to.have.property('challenge_progress');\r",
+											"    pm.expect(addedChallenge).to.have.property('user_id');\r",
+											"    pm.expect(addedChallenge).to.have.property('challenge_id');\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/add?challenge_id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"add"
+									],
+									"query": [
+										{
+											"key": "challenge_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Add_already_added_challenge_to_user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Add an already added challenge to the logged-in user - Response code 400\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Add an already added challenge to the logged-in user - Response contains 'Challenge already added'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'Challenge already added';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/add?challenge_id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"add"
+									],
+									"query": [
+										{
+											"key": "challenge_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "SETUP_Add_more_challenges",
+					"item": [
+						{
+							"name": "SETUP_Add_challenge_to_user_1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"SETUP - Add a challenge to the logged-in user profile - Response code 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/add?challenge_id=3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"add"
+									],
+									"query": [
+										{
+											"key": "challenge_id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SETUP_Add_challenge_to_user_2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"SETUP - Add a challenge to the logged-in user profile - Response code 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/add?challenge_id=4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"add"
+									],
+									"query": [
+										{
+											"key": "challenge_id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TEST_Get_all_user_challenges",
+					"item": [
+						{
+							"name": "TEST_Get_all_users_challenges",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get all user's challenges - Response code is 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get all user's challenges - Response contains the list of the logged-in user's challenges\", function () {\r",
+											"    const challenges = pm.response.json();\r",
+											"\r",
+											"    // Check if challenges array exists\r",
+											"    pm.expect(challenges).to.be.an('array');\r",
+											"    pm.expect(challenges).to.not.be.empty;\r",
+											"\r",
+											"    // Check properties of each challenge object\r",
+											"    challenges.forEach(challenge => {\r",
+											"        pm.expect(challenge).to.have.property('challenge_id');\r",
+											"        pm.expect(challenge).to.have.property('challenge_name');\r",
+											"        pm.expect(challenge).to.have.property('challenge_desc');\r",
+											"        pm.expect(challenge).to.have.property('challenge_type');\r",
+											"        pm.expect(challenge).to.have.property('challenge_goal');\r",
+											"        pm.expect(challenge).to.have.property('challenge_xp');\r",
+											"        pm.expect(challenge).to.have.property('challenge_status');\r",
+											"        pm.expect(challenge).to.have.property('challenge_progress');\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:4848/challenges/user"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TEST_Get_a_user_challenge_using_challenge_id",
+					"item": [
+						{
+							"name": "TEST_Get_a_user_challenge_using_invalid_challenge_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get a user's challenge using an invalid challenge_id - Response code is 404\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get a user's challenge using an invalid challenge_id - Response body contains 'Not Found'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/user/:challenge_id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"user",
+										":challenge_id"
+									],
+									"variable": [
+										{
+											"key": "challenge_id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Get_a_user_challenge_using_valid_challenge_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get a user's challenge using a valid challenge_id - Response code is 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get a user's challenge using a valid challenge_id - Response body contains the challenge information\", function () {\r",
+											"    const challenge = pm.response.json();\r",
+											"\r",
+											"    const expectedProperties = [\r",
+											"        \"challenge_id\",\r",
+											"        \"challenge_name\",\r",
+											"        \"challenge_desc\",\r",
+											"        \"challenge_type\",\r",
+											"        \"challenge_goal\",\r",
+											"        \"challenge_xp\",\r",
+											"        \"challenge_status\",\r",
+											"        \"challenge_progress\"\r",
+											"    ];\r",
+											"\r",
+											"    expectedProperties.forEach(function (property) {\r",
+											"        pm.expect(challenge).to.have.property(property);\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/user/:challenge_id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"user",
+										":challenge_id"
+									],
+									"variable": [
+										{
+											"key": "challenge_id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TEST_Get_a_challenge_info_using_challenge_id",
+					"item": [
+						{
+							"name": "TEST_Get_a_challenge_using_challenge_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get a challenge using a valid challenge_id - Response code is 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get a challenge using a valid challenge_id - Response body contains the challenge information\", function () {\r",
+											"    const challenge = pm.response.json();\r",
+											"\r",
+											"    const expectedProperties = [\r",
+											"        \"challenge_id\",\r",
+											"        \"challenge_name\",\r",
+											"        \"challenge_desc\",\r",
+											"        \"challenge_type\",\r",
+											"        \"challenge_goal\",\r",
+											"        \"challenge_xp\"\r",
+											"    ];\r",
+											"\r",
+											"    expectedProperties.forEach(function (property) {\r",
+											"        pm.expect(challenge).to.have.property(property);\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/:challenge_id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										":challenge_id"
+									],
+									"variable": [
+										{
+											"key": "challenge_id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Get_a_challenge_using_invalid_challenge_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get a challenge using an invalid challenge_id - Response code is 404\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get a challenge using an invalid challenge_id - Response body contains 'Not Found'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Not Found\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/:challenge_id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										":challenge_id"
+									],
+									"variable": [
+										{
+											"key": "challenge_id",
+											"value": "35"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Manually set conditions before run test - TEST_Get_finished_challenges",
+					"item": [
+						{
+							"name": "TEST_Get_all_users_finished_challenges",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get all user's finsihed challenges - Response code 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Get all user's finsihed challenges - Response contains the list of the logged-in user's finished challenges\", function () {\r",
+											"    const challenges = pm.response.json();\r",
+											"\r",
+											"    // Check if challenges array exists\r",
+											"    pm.expect(challenges).to.be.an('array');\r",
+											"    pm.expect(challenges).to.not.be.empty;\r",
+											"\r",
+											"    // Check properties of each challenge object\r",
+											"    challenges.forEach(challenge => {\r",
+											"        pm.expect(challenge).to.have.property('challenge_id');\r",
+											"        pm.expect(challenge).to.have.property('challenge_name');\r",
+											"        pm.expect(challenge).to.have.property('challenge_desc');\r",
+											"        pm.expect(challenge).to.have.property('challenge_type');\r",
+											"        pm.expect(challenge).to.have.property('challenge_goal');\r",
+											"        pm.expect(challenge).to.have.property('challenge_xp');\r",
+											"        pm.expect(challenge).to.have.property('challenge_status');\r",
+											"        pm.expect(challenge).to.have.property('challenge_progress');\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// // Define the data for updating location\r",
+											"// const locationData = {\r",
+											"//     \"locations\": [\r",
+											"//         {\r",
+											"//             \"challenge_id\": 4,\r",
+											"//             \"location_object\": {\r",
+											"//                 \"coords\": {\r",
+											"//                     \"latitude\": 30.453967,\r",
+											"//                     \"longitude\": -86.652502\r",
+											"//                 }\r",
+											"//             }\r",
+											"//         },\r",
+											"//         {\r",
+											"//             \"challenge_id\": 4,\r",
+											"//             \"location_object\": {\r",
+											"//                 \"coords\": {\r",
+											"//                     \"latitude\": 30.456167,\r",
+											"//                     \"longitude\": -86.650958\r",
+											"//                 }\r",
+											"//             }\r",
+											"//         }\r",
+											"//     ]\r",
+											"// };\r",
+											"\r",
+											"// // Send a POST request to the GPS route to update location data\r",
+											"// pm.sendRequest({\r",
+											"//     url: 'http://localhost:4848/challenges/gps',\r",
+											"//     method: 'POST',\r",
+											"//     header: {\r",
+											"//         'Content-Type': 'application/json'\r",
+											"//     },\r",
+											"//     body: JSON.stringify(locationData)\r",
+											"// }, function (err, res) {\r",
+											"//     if(err) {\r",
+											"//         console.error('Error:', err);\r",
+											"//     } else {\r",
+											"//         console.log('Response:', res.json());\r",
+											"//     }\r",
+											"// });"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:4848/challenges/finished"
+							},
+							"response": []
+						}
+					],
+					"description": "For this test to pass, manually set challenge #1's status to 'finished'."
+				},
+				{
+					"name": "TEST_GPS",
+					"item": [
+						{
+							"name": "TEST_GPS_update_locations_with_valid_inputs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Update locations with valid inputs - Response code is 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Update locations with valid inputs - Response contains 'OK'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"locations\": [\r\n        {\r\n            \"challenge_id\": 3,\r\n            \"location_object\": {\r\n                \"coords\": {\r\n                    \"latitude\": 30.453967,\r\n                    \"longitude\": -86.652502\r\n                }\r\n            }\r\n        },\r\n        {\r\n            \"challenge_id\": 3,\r\n            \"location_object\": {\r\n                \"coords\": {\r\n                    \"latitude\": 30.454095,\r\n                    \"longitude\": -86.652369\r\n                }\r\n            }\r\n        }\r\n    ]\r\n}\r\n\r\n// {\r\n//     \"locations\": [\r\n//         {\r\n//             \"challenge_id\": 4,\r\n//             \"location_object\": {\r\n//                 \"coords\": {\r\n//                     \"latitude\": 30.453967,\r\n//                     \"longitude\": -86.652502\r\n//                 }\r\n//             }\r\n//         },\r\n//         {\r\n//             \"challenge_id\": 4,\r\n//             \"location_object\": {\r\n//                 \"coords\": {\r\n//                     \"latitude\": 30.456167,\r\n//                     \"longitude\": -86.650958\r\n//                 }\r\n//             }\r\n//         }\r\n//     ]\r\n// }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/challenges/gps"
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_GPS_finished_challenge_status_when_updating_location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Failed - Check if challenge_status 'finished' updated after updating locations - Response code is 200\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Failed - Check if challenge_status 'finished' updated after updating locations - Response contains 'OK'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});\r",
+											"\r",
+											"// These tests are for verifying the location data is sent successfully\r",
+											"// Check the challenge_status using PHPMyAdmin"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"locations\": [\r\n        {\r\n            \"challenge_id\": 4,\r\n            \"location_object\": {\r\n                \"coords\": {\r\n                    \"latitude\": 30.453967,\r\n                    \"longitude\": -86.652502\r\n                }\r\n            }\r\n        },\r\n        {\r\n            \"challenge_id\": 4,\r\n            \"location_object\": {\r\n                \"coords\": {\r\n                    \"latitude\": 30.456167,\r\n                    \"longitude\": -86.650958\r\n                }\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/challenges/gps"
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_GPS_update_locations_with_invalid_inputs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Update locations with invalid inputs - Response code is 400\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Update locations with invalid inputs - Response contains 'Challenge not started or is unavaible'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Challenge not started or is unavaible\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"locations\": [\r\n        {\r\n            \"challenge_id\": 2,\r\n            \"location_object\": {\r\n                \"coords\": {\r\n                    \"latitude\": 30.454095,\r\n                    \"longitude\": -86.652369\r\n                }\r\n            }\r\n        },\r\n        {\r\n            \"challenge_id\": 2,\r\n            \"location_object\": {\r\n                \"coords\": {\r\n                    \"latitude\": 30.454136,\r\n                    \"longitude\": -86.652339\r\n                }\r\n            }\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:4848/challenges/gps"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TEST_Delete_a_challenge_from_user",
+					"item": [
+						{
+							"name": "TEST_Delete_a_challenge_from_user_using_valid_challenge_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Delete a challenge from a user profile using a valid challenge_id - Response code is 204\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/user/:challenge_id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"user",
+										":challenge_id"
+									],
+									"variable": [
+										{
+											"key": "challenge_id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TEST_Delete_a_challenge_from_user_without_challenge_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Delete a challenge from a user profile without a challenge_id - Response code is 500\", function () {\r",
+											"    pm.expect(pm.response).to.have.status(500);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Delete a challenge from a user profile without a challenge_id - Response contains 'Unable to delete challenge'\", function () {\r",
+											"    const errorResponse = pm.response.json(); // Parse the response body as JSON\r",
+											"    pm.expect(errorResponse).to.have.property(\"error\");\r",
+											"\r",
+											"    const expectedMessage = 'Unable to delete challenge';\r",
+											"    pm.expect(errorResponse.error).to.equal(expectedMessage);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4848/challenges/user/:challenge_id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4848",
+									"path": [
+										"challenges",
+										"user",
+										":challenge_id"
+									],
+									"variable": [
+										{
+											"key": "challenge_id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CLEANUP",
+					"item": [
+						{
+							"name": "CLEANUP_Delete_the_test_account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"CLEANUP for testing challenge routes - Delete the test account - Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "http://localhost:4848/users/delete"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
