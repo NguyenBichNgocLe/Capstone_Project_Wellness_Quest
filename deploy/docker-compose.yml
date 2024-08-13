@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+
+  db:
+    image: mysql:8.0.33
+    container_name: wq-prod-server-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-uroot', '-p$$MYSQL_ROOT_PASSWORD'] 
+      timeout: 30s
+      retries: 10
+
+
+  api:
+    build: 
+      context: ../backend
+    container_name: wq-prod-server-api
+    ports:
+      -80:80
+      -443:443
+    environment:
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOSTNAME=db
+    restart: always
+    networks:
+      - backend
+    depends_on:
+      db:
+        condition: service_healthy
+ 
+  pma:
+    image: phpmyadmin/phpmyadmin
+    platform: linux/x86_64
+    container_name: wq-prod-server-pma
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - PMA_ARBITRARY=1
+    restart: always 
+    networks: 
+      - backend
+    depends_on:
+      - api
+
+
+networks:    
+  backend:
+    driver: bridge

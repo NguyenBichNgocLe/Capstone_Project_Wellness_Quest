@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:8.0.33
+    container_name: wq-dev-server-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=WellnessQuest
+    platform: linux/x86_64
+    ports:
+      - 3306:3306
+    restart: always
+    volumes:
+      - ./mysql/dbdata:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-uroot', '-p$$MYSQL_ROOT_PASSWORD'] 
+      timeout: 100s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: wq-dev-server-pma
+    platform: linux/x86_64
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - PMA_ARBITRARY=1
+    restart: always 
+    networks: 
+      - backend
+
+networks:
+  backend:
+    driver: bridge
